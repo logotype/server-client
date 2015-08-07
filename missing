@@ -96,6 +96,7 @@ if test $st -eq 63; then
 elif test $st -eq 127; then
   # Program was missing.
   msg="missing on your system"
+  exit 0 # ignore missing programs
 else
   # Program was found and executed, but failed.  Give up.
   exit $st
