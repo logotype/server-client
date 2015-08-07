@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
     int n;
     
     if(argc < 2) {
-        fprintf(stderr, "ERROR, no port provided\n");
+        fprintf(stderr, "Usage: %s port\n", argv[0]);
         exit(1);
     }
     

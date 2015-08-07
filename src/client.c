@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
     server = gethostbyname(argv[1]);
 
     if(server == NULL) {
-        fprintf(stderr, "ERROR, no such host\n");
+        fprintf(stderr, "ERROR no such host\n");
         exit(0);
     }
 
@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
     printf("Message: ");
 
     bzero(buffer, 256);
-    fgets(buffer, 255, stdin);
+    if(fgets(buffer, 255, stdin) == NULL) error("ERROR reading stdin stream\n");
     n = write(socketConnection, buffer, strlen(buffer));
 
     if(n < 0) error("ERROR writing to socket\n");
