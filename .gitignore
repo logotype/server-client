@@ -1,10 +1,5 @@
 .DS_Store
 
 # automake/autoconf
-aclocal.m4
 autom4te.cache/
-compile
-depcomp
-install-sh
-Makefile.in
-missing
+.deps/
