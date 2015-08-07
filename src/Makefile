@@ -253,7 +253,7 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
-AM_CFLAGS = --pedantic -Wall -std=c99 -O2
+AM_CFLAGS = --pedantic -Wall -std=c99 -O2 -D_GNU_SOURCE
 AM_LDFLAGS = -lm
 __top_builddir__build_client_SOURCES = client.c
 __top_builddir__build_server_SOURCES = server.c
