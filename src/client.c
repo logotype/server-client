@@ -50,9 +50,7 @@ int main(int argc, char *argv[]) {
 
     socketConnection = socket(AF_INET, SOCK_STREAM, 0);
 
-    if(socketConnection < 0) {
-        error("ERROR opening socket\n");
-	}
+    if(socketConnection < 0) error("ERROR opening socket\n");
 
     server = gethostbyname(argv[1]);
 
@@ -67,9 +65,7 @@ int main(int argc, char *argv[]) {
     bcopy((char *)server->h_addr,(char *)&serv_addr.sin_addr.s_addr, server->h_length);
     serv_addr.sin_port = htons(portNumber);
 
-    if(connect(socketConnection,(struct sockaddr *)&serv_addr, sizeof(serv_addr))< 0) {
-        error("ERROR connecting\n");
-	}
+    if(connect(socketConnection,(struct sockaddr *)&serv_addr, sizeof(serv_addr))< 0) error("ERROR connecting\n");
 
     printf("Message: ");
 
@@ -77,16 +73,12 @@ int main(int argc, char *argv[]) {
     fgets(buffer, 255, stdin);
     n = write(socketConnection, buffer, strlen(buffer));
 
-    if(n < 0) {
-        error("ERROR writing to socket\n");
-	}
+    if(n < 0) error("ERROR writing to socket\n");
 
     bzero(buffer, 256);
     n = read(socketConnection, buffer, 255);
 
-    if(n < 0) {
-        error("ERROR reading from socket\n");
-	}
+    if(n < 0) error("ERROR reading from socket\n");
 
     printf("%s\n", buffer);
 

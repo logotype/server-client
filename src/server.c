@@ -48,9 +48,7 @@ int main(int argc, char *argv[]) {
     
     socketConnectionInQueue = socket(AF_INET, SOCK_STREAM, 0);
     
-    if(socketConnectionInQueue < 0) {
-        error("ERROR opening socket\n");
-    }
+    if(socketConnectionInQueue < 0) error("ERROR opening socket\n");
     
     bzero((char *)&serv_addr, sizeof(serv_addr));
     portNumber = atoi(argv[1]);
@@ -59,18 +57,14 @@ int main(int argc, char *argv[]) {
     serv_addr.sin_addr.s_addr = INADDR_ANY;
     serv_addr.sin_port = htons(portNumber);
 
-    if(bind(socketConnectionInQueue, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
-        error("ERROR on binding\n");
-    }
+    if(bind(socketConnectionInQueue, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) error("ERROR on binding\n");
 
     listen(socketConnectionInQueue, 5);
 
     socketLength = sizeof(cli_addr);
     socketConnection = accept(socketConnectionInQueue, (struct sockaddr *)&cli_addr, &socketLength);
     
-    if(socketConnection < 0) {
-        error("ERROR on accept\n");
-    }
+    if(socketConnection < 0) error("ERROR on accept\n");
 
     bzero(buffer, 256);
     n = read(socketConnection, buffer, 255);
@@ -78,6 +72,7 @@ int main(int argc, char *argv[]) {
     printf("Message: %s\n", buffer);
     n = write(socketConnection, "Message received.", 17);
     if(n < 0) error("ERROR writing to socket\n");
+    
     close(socketConnection);
     close(socketConnectionInQueue);
     return 0;
