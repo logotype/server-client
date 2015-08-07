@@ -86,7 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = client$(EXEEXT) server$(EXEEXT)
+bin_PROGRAMS = $(top_builddir)/build/client$(EXEEXT) \
+	$(top_builddir)/build/server$(EXEEXT)
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -98,12 +99,15 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_client_OBJECTS = client.$(OBJEXT)
-client_OBJECTS = $(am_client_OBJECTS)
-client_LDADD = $(LDADD)
-am_server_OBJECTS = server.$(OBJEXT)
-server_OBJECTS = $(am_server_OBJECTS)
-server_LDADD = $(LDADD)
+am___top_builddir__build_client_OBJECTS = client.$(OBJEXT)
+__top_builddir__build_client_OBJECTS =  \
+	$(am___top_builddir__build_client_OBJECTS)
+__top_builddir__build_client_LDADD = $(LDADD)
+am__dirstamp = $(am__leading_dot)dirstamp
+am___top_builddir__build_server_OBJECTS = server.$(OBJEXT)
+__top_builddir__build_server_OBJECTS =  \
+	$(am___top_builddir__build_server_OBJECTS)
+__top_builddir__build_server_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -132,8 +136,10 @@ AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(client_SOURCES) $(server_SOURCES)
-DIST_SOURCES = $(client_SOURCES) $(server_SOURCES)
+SOURCES = $(__top_builddir__build_client_SOURCES) \
+	$(__top_builddir__build_server_SOURCES)
+DIST_SOURCES = $(__top_builddir__build_client_SOURCES) \
+	$(__top_builddir__build_server_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -249,8 +255,8 @@ top_builddir = ..
 top_srcdir = ..
 AM_CFLAGS = --pedantic -Wall -std=c99 -O2
 AM_LDFLAGS = -lm
-client_SOURCES = client.c
-server_SOURCES = server.c
+__top_builddir__build_client_SOURCES = client.c
+__top_builddir__build_server_SOURCES = server.c
 all: all-am
 
 .SUFFIXES:
@@ -326,14 +332,17 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+$(top_builddir)/build/$(am__dirstamp):
+	@$(MKDIR_P) $(top_builddir)/build
+	@: > $(top_builddir)/build/$(am__dirstamp)
 
-client$(EXEEXT): $(client_OBJECTS) $(client_DEPENDENCIES) $(EXTRA_client_DEPENDENCIES) 
-	@rm -f client$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(client_OBJECTS) $(client_LDADD) $(LIBS)
+$(top_builddir)/build/client$(EXEEXT): $(__top_builddir__build_client_OBJECTS) $(__top_builddir__build_client_DEPENDENCIES) $(EXTRA___top_builddir__build_client_DEPENDENCIES) $(top_builddir)/build/$(am__dirstamp)
+	@rm -f $(top_builddir)/build/client$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(__top_builddir__build_client_OBJECTS) $(__top_builddir__build_client_LDADD) $(LIBS)
 
-server$(EXEEXT): $(server_OBJECTS) $(server_DEPENDENCIES) $(EXTRA_server_DEPENDENCIES) 
-	@rm -f server$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(server_OBJECTS) $(server_LDADD) $(LIBS)
+$(top_builddir)/build/server$(EXEEXT): $(__top_builddir__build_server_OBJECTS) $(__top_builddir__build_server_DEPENDENCIES) $(EXTRA___top_builddir__build_server_DEPENDENCIES) $(top_builddir)/build/$(am__dirstamp)
+	@rm -f $(top_builddir)/build/server$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(__top_builddir__build_server_OBJECTS) $(__top_builddir__build_server_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -473,6 +482,7 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-test -z "$(top_builddir)/build/$(am__dirstamp)" || rm -f $(top_builddir)/build/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"

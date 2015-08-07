@@ -1,5 +1,10 @@
 .DS_Store
 
 # automake/autoconf
+build/
+*.log
+*.o
 autom4te.cache/
 .deps/
+src/client
+src/server
